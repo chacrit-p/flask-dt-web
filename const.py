@@ -1,11 +1,13 @@
+import os
+
 # Define the host address for the application, usually set to localhost (127.0.0.1)
-APP_HOST: str = "127.0.0.1"
+APP_HOST: str = "0.0.0.0"
 
 # Enable or disable debug mode for the application; True means debug mode is on
 APP_DEBUG_MODE: bool = True
 
 # Set the port number on which the application will run; 5000 is a common default for web apps
-APP_PORT: int = 5000
+APP_PORT: int = int(os.environ.get("PORT", 5000))
 
 # Path to the folder where HTML templates are stored for rendering
 APP_TEMPLATE_FOLDER: str = "templates"
