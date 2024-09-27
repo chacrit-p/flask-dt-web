@@ -4,26 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} - decision tree </title>
 
     <!-- link font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- link style tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- link sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <style>
     html{
-        font-family: "Open Sans", sans-serif !important;
+        font-family: "Noto Sans Thai", sans-serif !important;
     }
 </style>
 
-<body >
-    <main class="antialiased">
+<body class="antialiased">
+    <main class="max-w-6xl mx-auto py-10">
         {% block content %}{% endblock %}
     </main>
 </body>
