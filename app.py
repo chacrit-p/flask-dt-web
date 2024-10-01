@@ -29,22 +29,40 @@ X = heart_disease_data[SELECTED_FEATURES]
 y = heart_disease_data['target']
 
 # Train the model
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42)
 model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     result_predict = None  # Default result is None (no prediction yet)
-    
-    if request.method == "POST":
-        # Retrieve user input from the form
-        user_input = [float(request.form[feature]) for feature in SELECTED_FEATURES]
 
+    if request.method == "POST":
+        # Retrieve user input from the form into a dictionary
+        print("post")
+        user_input = {
+            'age': float(request.form['age']),
+            'sex': float(request.form['sex']),
+            'cp': float(request.form['cp']),
+            'trestbps': float(request.form['trestbps']),
+            'chol': float(request.form['chol']),
+            'fbs': float(request.form['fbs']),
+            'restecg': float(request.form['restecg']),
+            'thalach': float(request.form['thalach']),
+            'exang': float(request.form['exang']),
+            'oldpeak': float(request.form['oldpeak']),
+            'slope': float(request.form['slope']),
+            'ca': float(request.form['ca']),
+            'thal': float(request.form['thal'])
+        }
         # Convert user input into a 2D array for prediction
-        user_input_array = np.array(user_input).reshape(1, -1)
+        user_input_array = np.array(list(user_input.values())).reshape(1, -1)
+        
         # Make a prediction using the trained model
         prediction = model.predict(user_input_array)
+        
         # Map prediction result to the human-readable output
         result_predict = "มีโรคหัวใจ" if prediction[0] == 1 else "ไม่มีโรคหัวใจ"
 
