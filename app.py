@@ -66,9 +66,6 @@ def index():
         # Map prediction result to the human-readable output
         result_predict = "มีโรคหัวใจ" if prediction[0] == 1 else "ไม่มีโรคหัวใจ"
 
-    csv_file = "static/data/heart.csv"
-    heart_disease_data = pd.read_csv(csv_file)
-
     page = request.args.get("page", 1, type=int)
     per_page = 25
     total_rows = heart_disease_data.shape[0]
