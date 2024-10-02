@@ -13,19 +13,32 @@
 
     <!-- link style tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- link sweetalert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <style>
-    html{
+    html {
         font-family: "Noto Sans Thai", sans-serif !important;
     }
 </style>
 
 <body class="antialiased">
-    <main class="max-w-6xl mx-auto py-3 px-1 md:px-5 md:py-8 lg:px-0 lg:py-10">
+    <nav class="py-5 bg-gray-300">
+        <div class="max-w-6xl mx-auto">
+            <ul class="flex gap-6">
+                <li>
+                    <a href="/">หน้าแรก</a>
+                </li>
+                <li>
+                    <a href="/table">ตาราง</a>
+                </li>
+                <li>
+                    <a href="/predict">คำณวน</a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+    <main class="max-w-6xl mx-auto py-3 px-1 md:px-5 md:py-8 lg:px-0 lg:py-5">
         {% block content %}{% endblock %}
     </main>
 </body>

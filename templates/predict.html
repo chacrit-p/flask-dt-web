@@ -1,0 +1,234 @@
+{% extends 'layout.html' %}
+{% block title %} Heart Disease Predict Test {% endblock %} {% block content %}
+<div>
+    <h1 class="text-3xl text-start font-bold mb-4">
+        Heart Disease Predict Test
+    </h1>
+    <form class="bg-gray-50 p-3 rounded-lg shadow-lg" action="/predict/result" method="POST">
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="age">
+                <h5 class="text-xl font-medium">อายุ</h5>
+                <p class="text-sm">กรุณากรอกอายุเป็นตัวเลขในช่วง 40-70 ปี</p>
+            </label>
+            <input class="w-full border border-gray-400 px-4 py-2 rounded-lg h-fit" id="age" name="age" type="number"
+                required min="40" max="70" placeholder="เช่น 45" />
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="sex">
+                <h5 class="text-xl font-medium">เพศ</h5>
+                <p class="text-sm">กรุณาเลือกเพศ (ชาย, หญิง)</p>
+            </label>
+            <div class="flex flex-row items-center space-x-4">
+                <label>
+                    <input type="radio" name="sex" value="1" required />
+                    ชาย
+                </label>
+                <label>
+                    <input type="radio" name="sex" value="0" required />
+                    หญิง
+                </label>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="cp">
+                <h5 class="text-xl font-medium">ประเภทอาการเจ็บหน้าอก</h5>
+                <p class="text-sm">กรุณาเลือกประเภทอาการเจ็บหน้าอก</p>
+            </label>
+            <div class="flex flex-col items-start space-y-2">
+                <label>
+                    <input type="radio" name="cp" value="0" required />
+                    ไม่มีอาการ
+                </label>
+                <label>
+                    <input type="radio" name="cp" value="1" required />
+                    เจ็บหน้าอกแบบไม่คงที่
+                </label>
+                <label>
+                    <input type="radio" name="cp" value="2" required />
+                    เจ็บหน้าอกเมื่อออกแรง
+                </label>
+                <label>
+                    <input type="radio" name="cp" value="3" required />
+                    เจ็บหน้าอกอย่างรุนแรง
+                </label>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="trestbps">
+                <h5 class="text-xl font-medium">ค่าความดันโลหิต</h5>
+                <p class="text-sm">กรุณากรอกค่าความดันโลหิตในช่วง 80-200 mm Hg</p>
+            </label>
+            <input class="w-full border border-gray-400 px-4 py-2 rounded-lg h-fit" id="trestbps" name="trestbps"
+                type="number" required min="80" max="200" placeholder="เช่น 120" />
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="chol">
+                <h5 class="text-xl font-medium">คอเลสเตอรอลในเลือด</h5>
+                <p class="text-sm">กรุณากรอกค่าคอเลสเตอรอลในช่วง 100-400 mg/dl</p>
+            </label>
+            <input class="w-full border border-gray-400 px-4 py-2 rounded-lg h-fit" id="chol" name="chol" type="number"
+                required min="100" max="400" placeholder="เช่น 180" />
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="fbs">
+                <h5 class="text-xl font-medium">น้ำตาลในเลือดขณะอดอาหาร</h5>
+                <p class="text-sm">
+                    กรุณาเลือกว่าค่าน้ำตาลในเลือดขณะอดอาหารมากกว่า 120 mg/dl หรือไม่ (1
+                    = จริง, 0 = เท็จ)
+                </p>
+            </label>
+
+            <div class="flex flex-row items-center space-x-4">
+                <label>
+                    <input type="radio" name="fbs" value="1" required />
+                    มากกว่า 120 mg/dl
+                </label>
+                <label>
+                    <input type="radio" name="fbs" value="0" required />
+                    น้อยกว่าหรือเท่ากับ 120 mg/dl
+                </label>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="restecg">
+                <h5 class="text-xl font-medium">ผลการตรวจคลื่นไฟฟ้าหัวใจขณะพัก</h5>
+                <p class="text-sm">
+                    กรุณาเลือกผลการตรวจคลื่นไฟฟ้าหัวใจขณะพัก (0 = ปกติ, 1 =
+                    มีความผิดปกติ, 2 = มีการขาดเลือด)
+                </p>
+            </label>
+
+            <div class="flex flex-col items-start space-y-2">
+                <label>
+                    <input type="radio" name="restecg" value="0" required />
+                    ปกติ
+                </label>
+                <label>
+                    <input type="radio" name="restecg" value="1" required />
+                    มีความผิดปกติ
+                </label>
+                <label>
+                    <input type="radio" name="restecg" value="2" required />
+                    มีการขาดเลือด
+                </label>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="thalach">
+                <h5 class="text-xl font-medium">
+                    อัตราการเต้นของหัวใจสูงสุดที่ได้รับ
+                </h5>
+                <p class="text-sm">
+                    กรุณากรอกอัตราการเต้นของหัวใจสูงสุดในช่วง 60-220 ครั้งต่อนาที
+                </p>
+            </label>
+            <input class="w-full border border-gray-400 px-4 py-2 rounded-lg h-fit" id="thalach" name="thalach"
+                type="number" required min="60" max="220" placeholder="เช่น 150" />
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="exang">
+                <h5 class="text-xl font-medium">
+                    การออกกำลังกายทำให้เกิดโรคหลอดเลือดหัวใจตีบ
+                </h5>
+                <p class="text-sm">
+                    กรุณาเลือกว่าการออกกำลังกายทำให้คุณมีอาการหรือไม่ (1 = ใช่, 0 =
+                    ไม่ใช่)
+                </p>
+            </label>
+
+            <div class="flex flex-row items-center space-x-4">
+                <label>
+                    <input type="radio" name="exang" value="1" required />
+                    ใช่
+                </label>
+                <label>
+                    <input type="radio" name="exang" value="0" required />
+                    ไม่ใช่
+                </label>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="oldpeak">
+                <h5 class="text-xl font-medium">ภาวะซึมเศร้าเกิดจากการออกกำลังกาย</h5>
+                <p class="text-sm">
+                    กรุณากรอกค่าภาวะซึมเศร้าจากการออกกำลังกายในช่วง -2.0 ถึง 6.0
+                </p>
+            </label>
+            <input class="w-full border border-gray-400 px-4 py-2 rounded-lg h-fit" id="oldpeak" name="oldpeak"
+                type="number" required step="0.1" min="-2.0" max="6.0" placeholder="เช่น 1.5" />
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="slope">
+                <h5 class="text-xl font-medium">
+                    ความชันของส่วน ST ของการออกกำลังกายสูงสุด
+                </h5>
+                <p class="text-sm">
+                    กรุณาเลือกความชันของส่วน ST (0 = ปกติ, 1 = ค่าต่ำ, 2 = ค่าปานกลาง)
+                </p>
+            </label>
+
+            <div class="flex flex-row items-center space-x-4">
+                <label>
+                    <input type="radio" name="slope" value="0" required />
+                    ปกติ
+                </label>
+                <label>
+                    <input type="radio" name="slope" value="1" required />
+                    ค่าต่ำ
+                </label>
+                <label>
+                    <input type="radio" name="slope" value="2" required />
+                    ค่าปานกลาง
+                </label>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="ca">
+                <h5 class="text-xl font-medium">จำนวนหลอดเลือดที่ตีบ</h5>
+                <p class="text-sm">กรุณากรอกจำนวนหลอดเลือดที่ตีบในช่วง 0-4</p>
+            </label>
+            <input class="w-full border border-gray-400 px-4 py-2 rounded-lg h-fit" id="ca" name="ca" type="number"
+                required min="0" max="4" placeholder="เช่น 2" />
+        </div>
+        <div class="grid grid-cols-2 w-full items-center border-b boder-gray-300 py-7">
+            <label class="flex flex-col items-end pr-10" for="thal">
+                <h5 class="text-xl font-medium">สถานะของ thalassemia</h5>
+                <p class="text-sm">
+                    กรุณาเลือกสถานะของ thalassemia ของคุณ (1 = ปกติ, 2 = ค่าต่ำ, 3 =
+                    ค่าปานกลาง, 4 = ค่าต่ำมาก)
+                </p>
+            </label>
+
+            <div class="flex flex-row items-center space-x-4">
+                <label>
+                    <input type="radio" name="thal" value="1" required />
+                    ปกติ
+                </label>
+                <label>
+                    <input type="radio" name="thal" value="2" required />
+                    ค่าต่ำ
+                </label>
+                <label>
+                    <input type="radio" name="thal" value="3" required />
+                    ค่าปานกลาง
+                </label>
+                <label>
+                    <input type="radio" name="thal" value="4" required />
+                    ค่าต่ำมาก
+                </label>
+            </div>
+        </div>
+        <div class="flex justify-between mt-5">
+            <input
+                class="px-5 py-2.5 bg-red-700 hover:bg-red-800 text-sm text-white font-medium rounded-lg transition cursor-pointer"
+                type="reset" value="ล้างข้อมูล" />
+
+            <button
+                class="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-sm text-white font-medium rounded-lg transition"
+                type="submit">
+                คำณวน
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
