@@ -76,53 +76,50 @@ def predict():
     return render_template("predict.html")
 
 
-@app.route("/predict/result", methods=["GET", "POST"])
+@app.route("/predict/result", methods=["POST"])
 def predict_result():
     result_predict = None
-    if request.method == "POST":
-        # Prepare features and target
-        X = HEART_DISEASE_DATA[SELECTED_FEATURES]
-        y = HEART_DISEASE_DATA["target"]
 
-        # Split data into train and test
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
+    # Prepare features and target
+    X = HEART_DISEASE_DATA[SELECTED_FEATURES]
+    y = HEART_DISEASE_DATA["target"]
 
-        # Initialize and train the model
-        model = DecisionTreeClassifier(random_state=42)
-        model.fit(X_train, y_train)
+    # Split data into train and test
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
-        # Get the user's input from the form
-        user_input = {
-            "age": float(request.form["age"]),
-            "sex": float(request.form["sex"]),
-            "cp": float(request.form["cp"]),
-            "trestbps": float(request.form["trestbps"]),
-            "chol": float(request.form["chol"]),
-            "fbs": float(request.form["fbs"]),
-            "restecg": float(request.form["restecg"]),
-            "thalach": float(request.form["thalach"]),
-            "exang": float(request.form["exang"]),
-            "oldpeak": float(request.form["oldpeak"]),
-            "slope": float(request.form["slope"]),
-            "ca": float(request.form["ca"]),
-            "thal": float(request.form["thal"]),
-        }
+    # Initialize and train the model
+    model = DecisionTreeClassifier(random_state=42)
+    model.fit(X_train, y_train)
 
-        # Convert the user's input (dictionary values) into a NumPy array
-        # Reshape the array to have 1 row and as many columns as there are features (-1 lets NumPy infer the number of columns)
-        user_input_array = np.array(list(user_input.values())).reshape(1, -1)
+    # Get the user's input from the form
+    user_input = {
+        "age": float(request.form["age"]),
+        "sex": float(request.form["sex"]),
+        "cp": float(request.form["cp"]),
+        "trestbps": float(request.form["trestbps"]),
+        "chol": float(request.form["chol"]),
+        "fbs": float(request.form["fbs"]),
+        "restecg": float(request.form["restecg"]),
+        "thalach": float(request.form["thalach"]),
+        "exang": float(request.form["exang"]),
+        "oldpeak": float(request.form["oldpeak"]),
+        "slope": float(request.form["slope"]),
+        "ca": float(request.form["ca"]),
+        "thal": float(request.form["thal"]),
+    }
 
-        # Use the trained model to predict whether the input indicates heart disease (1) or not (0)
-        prediction = model.predict(user_input_array)
+    # Convert the user's input (dictionary values) into a NumPy array
+    # Reshape the array to have 1 row and as many columns as there are features (-1 lets NumPy infer the number of columns)
+    user_input_array = np.array(list(user_input.values())).reshape(1, -1)
 
-        # Assign the result message based on the prediction:
-        # If the prediction is 1, it means heart disease is present, otherwise it's not
-        result_predict = "มีโรคหัวใจ" if prediction[0] == 1 else "ไม่มีโรคหัวใจ"
+    # Use the trained model to predict whether the input indicates heart disease (1) or not (0)
+    prediction = model.predict(user_input_array)
 
-    if request.method == "GET":
-        result_predict = "มีโรคหัวใจ"
+    # Assign the result message based on the prediction:
+    # If the prediction is 1, it means heart disease is present, otherwise it's not
+    result_predict = "มีโรคหัวใจ" if prediction[0] == 1 else "ไม่มีโรคหัวใจ"
 
     return render_template("predict_result.html", result_predict=result_predict)
 
